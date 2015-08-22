@@ -160,14 +160,9 @@ abstract class WP_Plugin_Uninstall_UnitTestCase extends WP_UnitTestCase {
 	 */
 	protected function install() {
 
-		system(
-			WP_PHP_BINARY
-			. ' ' . escapeshellarg( dirname( dirname( __FILE__ ) ) . '/bin/install-plugin.php' )
-			. ' ' . escapeshellarg( $this->plugin_file )
-			. ' ' . escapeshellarg( $this->install_function )
-			. ' ' . escapeshellarg( $this->locate_wp_tests_config() )
-			. ' ' . (int) is_multisite()
-		);
+		add_action( 'activate_' . $this->plugin_file, $this->install_function );
+
+		do_action( 'activate_' . $this->plugin_file, false );
 	}
 
 	/**
@@ -247,7 +242,6 @@ abstract class WP_Plugin_Uninstall_UnitTestCase extends WP_UnitTestCase {
 
 		} elseif ( ! empty( $this->uninstall_function ) ) {
 
-			include $this->plugin_file;
 
 			add_action( 'uninstall_' . $this->plugin_file, $this->uninstall_function );
 

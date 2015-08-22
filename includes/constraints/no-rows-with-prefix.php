@@ -60,7 +60,7 @@ class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_NoRowsWithPrefix extends PHP
 	 * @param string $prefix
 	 */
 	public function __construct( $table, $column, $prefix ) {
-
+		parent::__construct();
 		$this->table  = esc_sql( $table );
 		$this->column = esc_sql( $column );
 		$this->prefix = $prefix;
